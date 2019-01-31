@@ -1,0 +1,31 @@
+{
+  "name": "done-database",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node-dev --no-notify --respawn --transpileOnly ./src"
+  },
+  "dependencies": {
+    "graphql": "14.1.1",
+    "graphql-yoga": "1.17.1",
+    "nexus": "0.6.2",
+    "nexus-prisma": "0.0.17",
+    "prisma-client-lib": "1.25.4"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.18",
+    "@types/graphql": "14.0.5",
+    "@types/node": "10.12.19",
+    "@types/ws": "6.0.1",
+    "ts-node-dev": "1.0.0-pre.32",
+    "typescript": "3.2.4"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "printWidth": 160,
+    "trailingComma": "all",
+    "semi": false,
+    "tabWidth": 4
+  }
+}
