@@ -50,34 +50,34 @@ Then, follow these steps in the interactive CLI wizard:
 
 1. Ensure you have Docker installed on your machine. If not, you can get it from [here](https://store.docker.com/search?offering=community&type=edition).
 1. Create `docker-compose.yml` for MySQL (see [here](https://www.prisma.io/docs/prisma-server/database-connector-POSTGRES-jgfr/) for Postgres):
-   ```yml
-   version: '3'
-   services:
-     prisma:
-       image: prismagraphql/prisma:1.25
-       restart: always
-       ports:
-         - '4466:4466'
-       environment:
-         PRISMA_CONFIG: |
-           port: 4466
-           databases:
-             default:
-               connector: mysql
-               host: mysql
-               port: 3306
-               user: root
-               password: prisma
-               migrations: true
-     mysql:
-       image: mysql:5.7
-       restart: always
-       environment:
-         MYSQL_ROOT_PASSWORD: prisma
-       volumes:
-         - mysql:/var/lib/mysql
-   volumes: mysql:
-   ```
+    ```yml
+    version: '3'
+    services:
+        prisma:
+            image: prismagraphql/prisma:1.25
+            restart: always
+            ports:
+                - '4466:4466'
+            environment:
+                PRISMA_CONFIG: |
+                    port: 4466
+                    databases:
+                      default:
+                        connector: mysql
+                        host: mysql
+                        port: 3306
+                        user: root
+                        password: prisma
+                        migrations: true
+        mysql:
+            image: mysql:5.7
+            restart: always
+            environment:
+                MYSQL_ROOT_PASSWORD: prisma
+            volumes:
+                - mysql:/var/lib/mysql
+    volumes: mysql:
+    ```
 1. Run `docker-compose up -d`
 1. Set the `endpoint` in `prisma.yml` to `http://localhost:4466`
 1. Run `prisma deploy`
@@ -104,17 +104,17 @@ Feel free to adjust any operation by adding or removing fields. The GraphQL Play
 
 ```graphql
 query {
-  feed {
-    id
-    title
-    content
-    published
-    author {
-      id
-      name
-      email
+    feed {
+        id
+        title
+        content
+        published
+        author {
+            id
+            name
+            email
+        }
     }
-  }
 }
 ```
 
@@ -124,9 +124,9 @@ query {
 
 ```graphql
 mutation {
-  signupUser(name: "Sarah", email: "sarah@prisma.io") {
-    id
-  }
+    signupUser(name: "Sarah", email: "sarah@prisma.io") {
+        id
+    }
 }
 ```
 
@@ -134,14 +134,10 @@ mutation {
 
 ```graphql
 mutation {
-  createDraft(
-    title: "Join the Prisma Slack"
-    content: "https://slack.prisma.io"
-    authorEmail: "alice@prisma.io"
-  ) {
-    id
-    published
-  }
+    createDraft(title: "Join the Prisma Slack", content: "https://slack.prisma.io", authorEmail: "alice@prisma.io") {
+        id
+        published
+    }
 }
 ```
 
@@ -149,10 +145,10 @@ mutation {
 
 ```graphql
 mutation {
-  publish(id: "__POST_ID__") {
-    id
-    published
-  }
+    publish(id: "__POST_ID__") {
+        id
+        published
+    }
 }
 ```
 
@@ -162,17 +158,17 @@ mutation {
 
 ```graphql
 {
-  filterPosts(searchString: "graphql") {
-    id
-    title
-    content
-    published
-    author {
-      id
-      name
-      email
+    filterPosts(searchString: "graphql") {
+        id
+        title
+        content
+        published
+        author {
+            id
+            name
+            email
+        }
     }
-  }
 }
 ```
 
@@ -180,17 +176,17 @@ mutation {
 
 ```graphql
 {
-  post(id: "__POST_ID__") {
-    id
-    title
-    content
-    published
-    author {
-      id
-      name
-      email
+    post(id: "__POST_ID__") {
+        id
+        title
+        content
+        published
+        author {
+            id
+            name
+            email
+        }
     }
-  }
 }
 ```
 
@@ -200,9 +196,9 @@ mutation {
 
 ```graphql
 mutation {
-  deletePost(id: "__POST_ID__") {
-    id
-  }
+    deletePost(id: "__POST_ID__") {
+        id
+    }
 }
 ```
 
@@ -218,6 +214,16 @@ Note that the [`start`](./package.json#L6) script also starts a development serv
 
 ## Next steps
 
-- [Use Prisma with an existing database](https://www.prisma.io/docs/-t003/)
-- [Explore the Prisma client API](https://www.prisma.io/client/client-typescript)
-- [Learn more about the GraphQL schema](https://www.prisma.io/blog/graphql-server-basics-the-schema-ac5e2950214e/)
+-   [Use Prisma with an existing database](https://www.prisma.io/docs/-t003/)
+-   [Explore the Prisma client API](https://www.prisma.io/client/client-typescript)
+-   [Learn more about the GraphQL schema](https://www.prisma.io/blog/graphql-server-basics-the-schema-ac5e2950214e/)
+
+# Write your query or mutation here
+
+mutation {
+createUser(data: {
+email: "a",
+}) {
+id
+}
+}
