@@ -1,21 +1,5 @@
 mutation {
-    user1: createUser(data: { email: "alice@prisma.io", name: "Alice" }) {
-        id
-    }
-
-    user2: createUser(data: { email: "bob@prisma.io", name: "Bob" }) {
-        id
-    }
-
-    task1: createTask(data: { subject: "Hallo <strong>welt</strong>" }) {
-        id
-    }
-
-    task2: createTask(data: { subject: "Hallo <i>welt</i>" }) {
-        id
-    }
-
-    task3: createTask(data: { subject: "Hallo <u>welt</u>" }) {
+    user1: createUser() {
         id
     }
 }

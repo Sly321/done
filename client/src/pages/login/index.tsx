@@ -7,7 +7,7 @@ export interface Props {}
 
 const adduser = gql`
     mutation {
-        createUser(data: { email: "a" }) {
+        createUser {
             id
         }
     }
@@ -21,13 +21,32 @@ export default function Login({  }: Props) {
     return (
         <ApolloProvider client={client}>
             <div className="login">
-                <p>Hey, scheint als hättest du noch keine UserId, möchtest du dir eine Erstellen?</p>
                 <Mutation mutation={adduser}>
-                    {(addUserAction, { data }) => (
-                        <button type="submit" className="login-button" onClick={() => addUserAction()}>
-                            User erstellen
-                        </button>
-                    )}
+                    {(addUserAction, { data }) => {
+                        if (data) {
+                            const url = `${location.origin}?id=${data.createUser.id}`
+                            return (
+                                <>
+                                    <p>
+                                        Ein wenig sehr einfach bist du ja schon zu überzeugen nicht wahr? Seisdrum.
+                                        Diese Url ist jetzt deine persönliche Einsprungmarke zu deiner TODO App. Du
+                                        solltest sie dir abspeichern, wenn sie einmal verloren ist hole ich sie dir
+                                        nicht wieder zurück. Echt nicht.
+                                    </p>
+                                    <a href={url}>{url}</a>
+                                </>
+                            )
+                        }
+
+                        return (
+                            <>
+                                <p>Hey, scheint als hättest du noch keine UserId, möchtest du dir eine Erstellen?</p>
+                                <button type="submit" className="login-button" onClick={() => addUserAction()}>
+                                    User erstellen
+                                </button>
+                            </>
+                        )
+                    }}
                 </Mutation>
             </div>
         </ApolloProvider>

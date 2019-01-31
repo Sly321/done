@@ -10,6 +10,10 @@ export interface Props {
 }
 
 export default function TaskList({ tasks }: Props) {
+    if (!tasks.length) {
+        return <p>Nichts zu tun? Dekadent.</p>
+    }
+
     return (
         <>
             {tasks.map(task => {

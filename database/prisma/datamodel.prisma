@@ -1,7 +1,5 @@
 type User {
   id: ID! @unique
-  email: String! @unique
-  name: String
 }
 
 type Task {
@@ -10,4 +8,6 @@ type Task {
   updatedAt: DateTime!
   subject: String!
   important: Boolean! @default(value: "false")
+  completed: Boolean! @default(value: "false")
+  owner: User!
 }

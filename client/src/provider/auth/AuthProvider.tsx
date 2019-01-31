@@ -6,8 +6,16 @@ export interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-    const value: AuthContext = {
-        userId: '', // hier könnte ihre Implementierung Stattfinden
+    let userId = ''
+    const split = location.search.split('=')
+
+    if (split.length === 2) {
+        userId = split[1]
     }
+
+    const value: AuthContext = {
+        userId,
+    }
+
     return <Context.Provider value={value}>{children}</Context.Provider>
 }
