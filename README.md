@@ -17,4 +17,6 @@ yarn
 yarn start
 ```
 
+(tatsächlicher packungsinhalt kann abweichen)
+
 enjoy.
