@@ -1,18 +1,33 @@
-import React, { ReactNode, KeyboardEvent } from 'react'
+import React, { KeyboardEvent, ReactNode } from 'react'
+import { Mutation } from 'react-apollo'
+import { updateTask } from '../core/queries'
+import { Refetch } from './queryWrapper'
 
-export interface Props {
+export interface Props<T, S> {
     children: ReactNode
+    refetch: Refetch<T, S>
+    taskId: string
 }
 
-export default function Task({ children }: Props) {
+export default function Task<T, S>({ children, taskId, refetch }: Props<T, S>) {
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
         if (event.key === 'i') {
         }
     }
 
     return (
-        <div className="task" tabIndex={0} onKeyDown={handleKeyDown}>
-            {children}
-        </div>
+        <Mutation mutation={updateTask} variables={{ id: taskId }}>
+            {(updateTaskAction, { data }) => {
+                function handleClick() {
+                    updateTaskAction({ variables: { id: taskId } }).then(() => refetch())
+                }
+
+                return (
+                    <div className="task" tabIndex={0} onKeyDown={handleKeyDown} onClick={handleClick}>
+                        {children}
+                    </div>
+                )
+            }}
+        </Mutation>
     )
 }

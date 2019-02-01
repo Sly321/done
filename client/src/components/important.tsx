@@ -9,7 +9,7 @@ export interface Props {
 export default function Important({ important, id }: Props) {
     return (
         <div className="task-important-wrapper">
-            <input id={id} className="task-important" type="checkbox" checked={important} tabIndex={-1} />
+            <input id={id} className="task-important" type="checkbox" defaultChecked={important} tabIndex={-1} />
             <label htmlFor={id}>{important ? <FontAwesomeIcon icon="exclamation" /> : ''}</label>
         </div>
     )
