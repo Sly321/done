@@ -1,12 +1,41 @@
 import gql from 'graphql-tag'
+import { formatDateToGql, getTomorrow } from './DateUtils'
 
 export const getOpenTasks = gql`
-    {
-        tasks(where: { completed: false }) {
+    query GetOpenTasks($id: ID!) {
+        tasks(where: { owner: { id: $id }, completed: false }) {
             id
             subject
-            important
+            completed
             createdAt
+            updatedAt
+            important
+            owner {
+                id
+            }
+        }
+    }
+`
+
+export const getTasksDoneToday = gql`
+    query GetTasksDoneToday($id: ID!) {
+        tasks(
+            where: {
+                updatedAt_gt: "${formatDateToGql(new Date())}"
+                updatedAt_lt: "${formatDateToGql(getTomorrow())}"
+                owner: { id: $id }
+                completed: true
+            }
+        ) {
+            id
+            subject
+            completed
+            createdAt
+            updatedAt
+            important
+            owner {
+                id
+            }
         }
     }
 `
@@ -31,16 +60,16 @@ export const getUserById = gql`
 `
 
 export const createTask = gql`
-    mutation CreateTask($subject: String!, $ownerId: ID!) {
-        createTask(data: { subject: $subject, owner: { connect: { id: $ownerId } } }) {
+    mutation CreateTask($subject: String!, $ownerId: ID!, $important: Boolean) {
+        createTask(data: { subject: $subject, owner: { connect: { id: $ownerId } }, important: $important }) {
             id
         }
     }
 `
 
 export const updateTask = gql`
-    mutation UpdateTask($id: ID!) {
-        updateTask(data: { completed: true }, where: { id: $id }) {
+    mutation UpdateTask($id: ID!, $completed: Boolean!) {
+        updateTask(data: { completed: $completed }, where: { id: $id }) {
             id
         }
     }

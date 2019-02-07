@@ -1,13 +1,11 @@
 .login {
-    color: #f7f1e3;
     width: 300px;
     margin: auto;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    background: #706fd3;
     padding: 1rem;
-    box-shadow: 6px 6px 6px -5px #f7f1e3;
+    /* box-shadow: 6px 6px 6px -5px #f7f1e3; */
     margin-top: 1rem;
 }
 
@@ -16,9 +14,9 @@
 }
 
 .login-button {
-    border: 1px solid #218c74;
-    background: #33d9b2;
+    /* border: 1px solid #218c74;
+    background: #33d9b2; */
     padding: 1rem;
     font-size: 2rem;
-    color: #40407a;
+    /* color: #40407a; */
 }

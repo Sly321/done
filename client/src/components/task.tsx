@@ -1,29 +1,33 @@
 import React, { KeyboardEvent, ReactNode } from 'react'
 import { Mutation } from 'react-apollo'
 import { updateTask } from '../core/queries'
-import { Refetch } from './queryWrapper'
+import { withRefetch } from '../provider/refetch/RefetchConsumer'
+import { RefetchContext } from '../provider/refetch/RefetchContext'
+import clsx from 'clsx'
 
-export interface Props<T, S> {
+export interface Props {
     children: ReactNode
-    refetch: Refetch<T, S>
     taskId: string
+    completed: boolean
 }
 
-export default function Task<T, S>({ children, taskId, refetch }: Props<T, S>) {
+function Task({ children, taskId, refetch, completed }: Props & RefetchContext) {
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
         if (event.key === 'i') {
         }
     }
 
     return (
-        <Mutation mutation={updateTask} variables={{ id: taskId }}>
-            {(updateTaskAction, { data }) => {
+        <Mutation mutation={updateTask} variables={{ id: taskId, completed: !completed }}>
+            {(updateTaskAction, { loading }) => {
+                const className = clsx('task', completed && 'completed', loading && 'loading')
+
                 function handleClick() {
-                    updateTaskAction({ variables: { id: taskId } }).then(() => refetch())
+                    updateTaskAction().then(() => refetch())
                 }
 
                 return (
-                    <div className="task" tabIndex={0} onKeyDown={handleKeyDown} onClick={handleClick}>
+                    <div className={className} tabIndex={0} onKeyDown={handleKeyDown} onClick={handleClick}>
                         {children}
                     </div>
                 )
@@ -31,3 +35,5 @@ export default function Task<T, S>({ children, taskId, refetch }: Props<T, S>) {
         </Mutation>
     )
 }
+
+export default withRefetch<Props>(Task)

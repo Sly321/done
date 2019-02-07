@@ -41,8 +41,8 @@ export default function Login({  }: Props) {
                         return (
                             <>
                                 <p>Hey, scheint als hättest du noch keine UserId, möchtest du dir eine Erstellen?</p>
-                                <button type="submit" className="login-button" onClick={() => addUserAction()}>
-                                    User erstellen
+                                <button type="button" className="login-button" onClick={() => addUserAction()}>
+                                    ID erstellen
                                 </button>
                             </>
                         )

@@ -8,8 +8,8 @@ export interface Props {
 export default function Error({ error }: Props) {
     return (
         <>
-            <div>If you can't fix it</div>
-            <pre>{error}</pre>
+            <div>If you can't fix it, fuck it 🎉</div>
+            <pre>{error.message}</pre>
         </>
     )
 }

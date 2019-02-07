@@ -1,13 +1,22 @@
 type User {
-  id: ID! @unique
+    id: ID! @unique
+    name: String
+}
+
+type Category {
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    name: String!
 }
 
 type Task {
-  id: ID! @unique
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  subject: String!
-  important: Boolean! @default(value: "false")
-  completed: Boolean! @default(value: "false")
-  owner: User!
+    id: ID! @unique
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    subject: String!
+    important: Boolean! @default(value: "false")
+    completed: Boolean! @default(value: "false")
+    owner: User!
+    category: Category
 }

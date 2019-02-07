@@ -8,3 +8,19 @@ export function dateToLocaleString(date: Date) {
         minute: '2-digit',
     })
 }
+
+/**
+ * Returns a Date, that represents tomorrow.
+ *
+ * @export
+ * @returns {Date}
+ */
+export function getTomorrow(): Date {
+    return new Date(new Date().getTime() + 1000 * 60 * 60 * 24)
+}
+
+export function formatDateToGql(d: Date): string {
+    const day = d.getDate()
+    const mon = d.getMonth() + 1
+    return `${d.getFullYear()}-${mon < 10 ? '0' : ''}${mon}-${day < 10 ? '0' : ''}${day}`
+}

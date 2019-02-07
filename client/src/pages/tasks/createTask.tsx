@@ -1,28 +1,36 @@
 import React from 'react'
 import { Mutation } from 'react-apollo'
-import { createTask } from '../../core/queries'
 import TaskInput from '../../components/taskInput'
-import { Refetch } from '../../components/queryWrapper'
+import { createTask } from '../../core/queries'
+import { withRefetch } from '../../provider/refetch/RefetchConsumer'
+import { RefetchContext } from '../../provider/refetch/RefetchContext'
+import Error from '../../components/error'
 
-export interface Props<T, S> {
+export interface Props {
     userId: string
-    refetch: Refetch<T, S>
 }
 
-export default function CreateTask<T, S>({ userId, refetch }: Props<T, S>) {
+function CreateTask({ userId, refetch }: Props & RefetchContext) {
     return (
         <Mutation mutation={createTask}>
-            {(createTaskAction, { data }) => {
+            {(createTaskAction, { data, error }) => {
                 if (data) {
                     console.log(data)
                 }
 
-                const handleAction = (args: { subject: string; ownerId: string }) => {
+                const handleAction = (args: { subject: string; ownerId: string; important: boolean }) => {
                     createTaskAction({ variables: args }).then(() => refetch())
                 }
 
-                return <TaskInput action={handleAction} userId={userId} />
+                return (
+                    <>
+                        <TaskInput action={handleAction} userId={userId} />
+                        {error && <Error error={error} />}
+                    </>
+                )
             }}
         </Mutation>
     )
 }
+
+export default withRefetch(CreateTask)

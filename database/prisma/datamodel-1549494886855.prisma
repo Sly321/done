@@ -1,0 +1,42 @@
+type _CategoryToTask @pgTable(name: "_CategoryToTask") {
+  A: Category @pgRelation(column: "A")
+  B: Task @pgRelation(column: "B")
+  id: ID! @id @unique
+}
+
+type _RelayId @pgTable(name: "_RelayId") {
+  id: ID! @id @unique
+  stableModelIdentifier: String!
+}
+
+type _TaskToUser @pgTable(name: "_TaskToUser") {
+  A: Task @pgRelation(column: "A")
+  B: User @pgRelation(column: "B")
+  id: ID! @id @unique
+}
+
+type Category @pgTable(name: "Category") {
+  _CategoryToTasks: [_CategoryToTask!]!
+  createdAt: DateTime!
+  id: ID! @id @unique
+  name: String!
+  updatedAt: DateTime!
+}
+
+type Task @pgTable(name: "Task") {
+  _CategoryToTasks: [_CategoryToTask!]!
+  _TaskToUsers: [_TaskToUser!]!
+  completed: Boolean!
+  createdAt: DateTime!
+  id: ID! @id @unique
+  important: Boolean!
+  subject: String!
+  updatedAt: DateTime!
+}
+
+type User @pgTable(name: "User") {
+  _TaskToUsers: [_TaskToUser!]!
+  createdAt: DateTime!
+  id: ID! @id @unique
+  updatedAt: DateTime!
+}

@@ -1,5 +1,0 @@
-mutation {
-    user1: createUser() {
-        id
-    }
-}
