@@ -7,7 +7,7 @@ export interface Props {}
 
 const adduser = gql`
     mutation {
-        createUser {
+        createUser(data: {}) {
             id
         }
     }
@@ -22,7 +22,7 @@ export default function Login({  }: Props) {
         <ApolloProvider client={client}>
             <div className="login">
                 <Mutation mutation={adduser}>
-                    {(addUserAction, { data }) => {
+                    {(addUserAction, { data, error, loading }) => {
                         if (data) {
                             const url = `${location.origin}?id=${data.createUser.id}`
                             return (
@@ -41,9 +41,15 @@ export default function Login({  }: Props) {
                         return (
                             <>
                                 <p>Hey, scheint als hättest du noch keine UserId, möchtest du dir eine Erstellen?</p>
-                                <button type="button" className="login-button" onClick={() => addUserAction()}>
+                                <button
+                                    type="button"
+                                    disabled={loading}
+                                    className="login-button"
+                                    onClick={() => addUserAction()}
+                                >
                                     ID erstellen
                                 </button>
+                                {error && <pre>{error.message}</pre>}
                             </>
                         )
                     }}
